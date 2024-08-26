@@ -91,7 +91,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.container():
             st.write("Quellen")
             for source in response_stream.source_nodes:
-                st.markdown("> [" + source.metadata["file_name"] + "](" + source.metadata["file_path"] + ")" + " S." + source.metadata["page_label"])
+                st.markdown(source.metadata["file_name"] + " S." + source.metadata["page_label"])
 
         
         #Add message to chat history
