@@ -47,7 +47,7 @@ st.set_page_config(
     page_icon=""
 )
 
-st.logo("logo.png")
+st.logo("assets/logo.png")
 st.title('mindsquare Yoda')
 
 #container = st.container(border=True)
