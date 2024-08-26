@@ -11,10 +11,10 @@ After installing the packages you need to do the following:
 2. Place your custom data into that folder e.g. PDF-Files or other File Data
 3. Create a file .env within the main folder and setup following variables:
 
-OPENAI_API_KEY=[YOUR API KEY]
-ANTHROPIC_API_KEY=[YOUR API KEY]
-ANTHROPIC_MODELL=[YOUR MODELL]
-COMPANY_NAME=[The Company Name is used to become a greet in the initial message]
+OPENAI_API_KEY=[YOUR API KEY]<br>
+ANTHROPIC_API_KEY=[YOUR API KEY]<br>
+ANTHROPIC_MODELL=[YOUR MODELL]<br>
+COMPANY_NAME=[The Company Name is used to become a greet in the initial message]<br>
 
 >Notice: At the moment OPENAI & ANTHROPIC KEY are mandatory. OPENAI Ada Modell is used to create embeddings, while Claude-Modells will be used for Chat-Bot.
 
