@@ -2,7 +2,7 @@
 AI Chat based on Streamlit &amp; Llama-Index
 
 ## How to setup
-Make sure python is installed on your computer in Version > 3.0, then clone the repository
+Make sure python is installed on your computer in Version > 3.0, then clone the repository install the modules with:
 
 ``pip install -r requirements.txt``
 
