@@ -1,7 +1,6 @@
 import os.path
 import streamlit as st
 from dotenv import load_dotenv
-from llama_index.core.callbacks import CallbackManager, TokenCountingHandler
 from llama_index.llms.anthropic import Anthropic
 from llama_index.core import Settings
 from llama_index.core import (
@@ -13,20 +12,24 @@ from llama_index.core import (
 
 #Setup API Keys and Config Variables
 load_dotenv()
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
-os.environ["ANTHROPIC_API_KEY"] = os.getenv("ANTHROPIC_API_KEY")
-anthropic_modell = os.getenv("ANTHROPIC_MODELL") #claude-3-haiku-20240307 = fast/cheap, claude-3-sonnet-20240229, claude-3-5-sonnet-20240620, claude-3-opus-20240229 = slow/expensive
-company_name = os.getenv("COMPANY_NAME")
 
-#Use Token Counter to get statistics about used tokens
-token_counter = TokenCountingHandler(
-    tokenizer = Anthropic().tokenizer.encode
-)
+if os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+if os.getenv("ANTHROPIC_API_KEY"):
+    os.environ["ANTHROPIC_API_KEY"] = os.getenv("ANTHROPIC_API_KEY")
+if os.getenv("ANTHROPIC_MODELL"):
+    anthropic_modell = os.getenv("ANTHROPIC_MODELL") #claude-3-haiku-20240307 = fast/cheap, claude-3-sonnet-20240229, claude-3-5-sonnet-20240620, claude-3-opus-20240229 = slow/expensive
+else:
+    anthropic_modell = "" #will force app to use OpenAI Modell
+if os.getenv("COMPANY_NAME"):
+    company_name = os.getenv("COMPANY_NAME")
+else:
+    company_name = "mindsquare AG"
 
 #Setup global Settings for the App
-Settings.tokenizer = Anthropic().tokenizer
-Settings.llm = Anthropic(model=anthropic_modell)
-Settings.callback_manager = CallbackManager([token_counter])
+if anthropic_modell:
+    Settings.tokenizer = Anthropic().tokenizer
+    Settings.llm = Anthropic(model=anthropic_modell)
 
 #Create and persist index based on data folder
 PERSIST_DIR = "./storage"
@@ -49,10 +52,6 @@ st.set_page_config(
 
 st.logo("assets/logo.png")
 st.title('mindsquare Yoda')
-
-#container = st.container(border=True)
-#container.write("Embedding Token: " + str(token_counter.total_embedding_token_count))
-#container.write("LLM Token: " + str(token_counter.total_llm_token_count))
 
 if "messages" not in st.session_state.keys():  # Initialize the chat messages history
     st.session_state.messages = [
