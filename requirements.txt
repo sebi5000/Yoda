@@ -1,5 +1,8 @@
 llama_index==0.11.1
 llama-index-llms-anthropic
+llama-index-readers-web
 prefect
+html2text
+tomli
 python-dotenv==1.0.1
 streamlit==1.37.1
