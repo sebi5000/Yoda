@@ -1,4 +1,5 @@
 # Yoda
+![Static Badge](https://img.shields.io/badge/Version-0.2-blue) <br>
 AI Chat based on Streamlit &amp; Llama-Index
 
 ## How to setup
