@@ -27,7 +27,7 @@ You will find a config.toml file within the apps main folder. Use this file to c
 >Notice: You can choose one of the listed Anthropic Modells. If you don't have or want a Anthropic API-Key you can remove the Anthropic Key from .env file and set the modell parameter in config.toml = "". In that case GPT 3.5 is used as default.
 
 You can choose between the following modells (starts with low-price/fast):
-- gpt-3.5-turbo (used if your .env file doesn't contain Anthropic Values)
+- gpt-3.5-turbo (used if your config file contains empty model)
 - claude-3-haiku-20240307
 - claude-3-sonnet-20240229
 - claude-3-5-sonnet-20240620
