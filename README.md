@@ -16,9 +16,10 @@ ANTHROPIC_API_KEY=[YOUR API KEY]<br>
 ANTHROPIC_MODELL=[YOUR MODELL]<br>
 COMPANY_NAME=[The Company Name is used to become a greet in the initial message]<br>
 
->Notice: At the moment OPENAI & ANTHROPIC KEY are mandatory. OPENAI Ada Modell is used to create embeddings, while Claude-Modells will be used for Chat-Bot.
+>Notice: You can choose one of the listed Anthropic Modells. If you don't have or want a Anthropic API-Key you can remove the Anthropic Variables from .env file. In that case GPT 3.5 is used as default.
 
 You can choose between the following modells (starts with low-price/fast):
+- gpt-3.5-turbo (used if your .env file doesn't contain Anthropic Values)
 - claude-3-haiku-20240307
 - claude-3-sonnet-20240229
 - claude-3-5-sonnet-20240620
