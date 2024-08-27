@@ -1,3 +1,5 @@
 llama_index==0.11.1
+llama-index-llms-anthropic
+prefect
 python-dotenv==1.0.1
 streamlit==1.37.1
