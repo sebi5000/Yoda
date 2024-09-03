@@ -1,5 +1,5 @@
 # Yoda
-![Static Badge](https://img.shields.io/badge/Version-0.2-blue) <br>
+![Static Badge](https://img.shields.io/badge/Version-0.3-blue) <br>
 AI Chat based on Streamlit &amp; Llama-Index
 
 ## How to setup
@@ -13,6 +13,8 @@ After installing the packages you need to do the following:
 3. Create a file .env within the main folder and setup following variables:
 
 OPENAI_API_KEY=[YOUR API KEY]<br>
+
+If you want to use Anthropic Models as well, you should also add:
 ANTHROPIC_API_KEY=[YOUR API KEY]<br>
 
 ## Start the App
@@ -23,13 +25,15 @@ Make sure you have some file in your data Folder. Then run command:
 If everything is setup correctly the browser will open a Chat on localhost. Notice that the initial load will need some time, because the index is created. If you change your data over time, you can simply delete the /storage folder which is created by the app. This will force the app to recreate the index.
 
 ## Further Configuration
-You will find a config.toml file within the apps main folder. Use this file to configure the app texts and modell in more detail:
-
->Notice: You can choose one of the listed Anthropic Modells. If you don't have or want a Anthropic API-Key you can remove the Anthropic Key from .env file and set the modell parameter in config.toml = "". In that case GPT 3.5 is used as default.
+You will find a config.toml file within the apps main folder. Use this file to configure the app texts and models in more detail:
 
 You can choose between the following modells (starts with low-price/fast):
-- gpt-3.5-turbo (used if your config file contains empty model)
+- gpt-3.5-turbo
+- gpt-4
+- gpt-4o
 - claude-3-haiku-20240307
 - claude-3-sonnet-20240229
 - claude-3-5-sonnet-20240620
 - claude-3-opus-20240229
+
+By default the config is pre-configured for using Anthropic Models.
