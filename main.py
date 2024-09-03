@@ -17,7 +17,6 @@ from llama_index.core import (
 ##############################
 # Initialize & Check Configuration
 ##############################
-
 pre_check_message = ""
 
 #LOAD Secrets & API-Keys
@@ -44,7 +43,7 @@ if ( not config["app"]["default_provider"] or
 selected_provider = config["app"]["default_provider"]
 selected_model = config["app"]["default_model"]
 
-models = { "anthrophic": config["anthropic"]["models"],
+models = { "anthropic": config["anthropic"]["models"],
            "openai": config["openai"]["models"] }
 
 if not pre_check_message == "":
@@ -98,28 +97,41 @@ st.logo("assets/logo.png")
 st.title(title)
 
 #Switch Chat-Engine based on choosen Model
-def on_model_change():
-
+def switch_modell(selected_provider: str, selected_model: str):
     selected_model_obj = None
-    if selected_provider == "anthropic":
-        Settings.tokenizer = Anthropic().tokenizer
-        selected_model_obj = Anthropic(model=selected_model)
-    else:
-        Settings.tokenizer = tiktoken.encoding_for_model(selected_model).encode #set to default GPT
-        selected_model_obj = OpenAI(model=selected_model)
     
+    try:
+        if selected_provider == "anthropic":
+            Settings.tokenizer = Anthropic().tokenizer
+            selected_model_obj = Anthropic(model=selected_model)
+        else:
+            Settings.tokenizer = tiktoken.encoding_for_model(selected_model).encode #set to default GPT
+            selected_model_obj = OpenAI(model=selected_model)        
+    except KeyError:
+        Settings.tokenizer = tiktoken.get_encoding("cl100k_base") #Fallback to default tokenizer from gpt models
+
     st.session_state.chat_engine = index.as_chat_engine(
-        chat_mode="condense_question", verbose=False, streaming=True, llm=selected_model_obj
+        chat_mode="condense_plus_context", verbose=False, streaming=True, llm=selected_model_obj
     )
+
+def on_provider_change():
+    selected_provider = st.session_state.sel_provider
+    selected_model = models.get(selected_provider)[0] #get default model for that provider
+    switch_modell(selected_provider, selected_model)
+
+def on_model_change():
+    selected_provider = st.session_state.sel_provider
+    selected_model = st.session_state.sel_model
+    switch_modell(selected_provider, selected_model)
 
 #Create Model Selection
 if config["app"]["show_model_selection"]:
     
     col1, col2 = st.columns(2)
     with col1:        
-        selected_provider = st.selectbox(config["texts"][language]["choose_model_provider"], models.keys(), 0)
+        selected_provider = st.selectbox(config["texts"][language]["choose_model_provider"], models.keys(), 0, on_change=on_provider_change, key="sel_provider")
     with col2:
-        selected_model = st.selectbox(config["texts"][language]["choose_model"], models.get(selected_provider), 0, on_change=on_model_change)
+        selected_model = st.selectbox(config["texts"][language]["choose_model"], models.get(selected_provider), 0, on_change=on_model_change, key="sel_model")
 
 ##############################
 # Initialize Chat Functionality
