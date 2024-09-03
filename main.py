@@ -111,7 +111,7 @@ def switch_modell(selected_provider: str, selected_model: str):
         Settings.tokenizer = tiktoken.get_encoding("cl100k_base") #Fallback to default tokenizer from gpt models
 
     st.session_state.chat_engine = index.as_chat_engine(
-        chat_mode="condense_plus_context", verbose=False, streaming=True, llm=selected_model_obj
+        chat_mode="condense_plus_context", verbose=False, streaming=True, llm=selected_model_obj, system_prompt=config["app"]["system_prompt"]
     )
 
 def on_provider_change():
@@ -145,14 +145,12 @@ if "messages" not in st.session_state.keys():  # Initialize the chat messages hi
         }
     ]
 
-chat_engine = index.as_chat_engine(chat_mode="condense_question")
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 if "chat_engine" not in st.session_state.keys():  # Initialize the chat engine
     st.session_state.chat_engine = index.as_chat_engine(
-        chat_mode="condense_question", verbose=False, streaming=True
+        chat_mode="condense_plus_context", verbose=False, streaming=True, system_prompt=config["app"]["system_prompt"]
     )
 
 if prompt := st.chat_input():  # Prompt for user input and save to chat history
@@ -172,7 +170,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.container():
             st.write(source)
             for source in response_stream.source_nodes:
-                st.markdown(source.metadata["file_name"] + source.metadata["page_label"])
+                st.markdown(source.metadata["file_name"] + " " + source.metadata["page_label"])
 
         #Add message to chat history
         message = {"role": "assistant", "content": response_stream.response}        

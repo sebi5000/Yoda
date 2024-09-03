@@ -2,9 +2,15 @@
 [app]
 title = "mindsquare Yoda"
 language = "de" #change to switch between languages - only languages within [texts] Section are supported. You can enhance by yourself :)
+
 default_provider = "anthropic" #anthropic or openai
 default_model = "claude-3-haiku-20240307"
+
 show_model_selection = true #allows to switch the model - disable to hide selections
+show_roles = true #allows to switch the role, which will active other system_prompts and allows you to justify tone etc.
+
+#the system prompt is integrated in every chat, it gives general advise how the bot should behave
+system_prompt = "You are a friendly AI-Bot, which answers questions based on the given context information. You are working for employees in a mid-market german company and you are professional."
 
 [anthropic]
 models = ["claude-3-haiku-20240307", "claude-3-sonnet-20240229", "claude-3-5-sonnet-20240620", "claude-3-opus-20240229"]
