@@ -4,5 +4,6 @@ llama-index-readers-web
 prefect
 html2text
 tomli
+tiktoken
 python-dotenv==1.0.1
 streamlit==1.37.1
