@@ -1,16 +1,15 @@
 #Configuration File for mindsquare Yoda
 [app]
-title = "mindsquare Yoda"
+title = "Graepel Wissensmanagement"
 language = "de" #change to switch between languages - only languages within [texts] Section are supported. You can enhance by yourself :)
 
 default_provider = "anthropic" #anthropic or openai
 default_model = "claude-3-haiku-20240307"
 
-show_model_selection = true #allows to switch the model - disable to hide selections
-show_roles = true #allows to switch the role, which will active other system_prompts and allows you to justify tone etc.
+show_model_selection = false #allows to switch the model - disable to hide selections
 
 #the system prompt is integrated in every chat, it gives general advise how the bot should behave
-system_prompt = "You are a friendly AI-Bot, which answers questions based on the given context information. You are working for employees in a mid-market german company and you are professional."
+system_prompt = "You are a friendly AI-Bot, which answers questions based on the given context information. You are working for employees in a mid-market german company and you are professional. Your answers are short and on point."
 
 [anthropic]
 models = ["claude-3-haiku-20240307", "claude-3-sonnet-20240229", "claude-3-5-sonnet-20240620", "claude-3-opus-20240229"]
@@ -22,13 +21,13 @@ models = ["gpt-3.5-turbo", "gpt-4", "gpt-4o"]
 #If you want to add a new language simply copy one block [texts.YOUR_LANG_KEY] and translate the values. Then switch lang
 #parameter within app-section to that language key
 [texts.en]
-initial_message = "Ask me something about mindsquare AG" #Initial message from Yoda if you start the chat
+initial_message = "Ask me something about Graepel GmbH" #Initial message from Yoda if you start the chat
 source = "Sources" #Headline to mention the source section where Yoda list all sources used for the reply
 choose_model_provider = "Choose model provider"
 choose_model = "Choose model"
 
 [texts.de]
-initial_message = "Frage mich etwas über mindsquare AG" #Initial message from Yoda if you start the chat
+initial_message = "Frage mich etwas über die Graepel GmbH" #Initial message from Yoda if you start the chat
 source = "Quellen" #Headline to mention the source section where Yoda list all sources used for the reply
 choose_model_provider = "Wähle einen Anbieter"
 choose_model = "Wähle ein Modell"

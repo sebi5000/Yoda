@@ -2,10 +2,11 @@ import os.path
 import streamlit as st
 import tiktoken
 from dotenv import load_dotenv
+from tomli import load
+from llama_index.core import Settings
 from llama_index.llms.anthropic import Anthropic
 from llama_index.llms.openai import OpenAI
-from llama_index.core import Settings
-from tomli import load
+from llama_index.readers.file import DocxReader, PDFReader, PandasExcelReader, MarkdownReader, ImageReader, PandasCSVReader
 
 from llama_index.core import (
     VectorStoreIndex,
@@ -65,9 +66,25 @@ else:
 PERSIST_DIR = "./storage"
 if not os.path.exists(PERSIST_DIR):
 
-    # Load DATA Folder
-    documents = SimpleDirectoryReader("data").load_data()
+    # Load DATA Folder    
+    pdf_reader = PDFReader()
+    docx_reader = DocxReader()
+    csv_reader = PandasCSVReader()
+    xlsx_reader = PandasExcelReader()
+    markdown_reader = MarkdownReader()
+    image_reader = ImageReader()
 
+    file_extractor = { ".docx": docx_reader,
+                       ".pdf": pdf_reader,
+                       ".xlsx": xlsx_reader,
+                       ".csv": csv_reader,
+                       ".md": markdown_reader,
+                       ".png": image_reader,
+                       ".jpg": image_reader,
+                       ".jpeg": image_reader }
+
+    # 1. Load all files in data
+    documents = SimpleDirectoryReader("./data", file_extractor=file_extractor).load_data()
     index = VectorStoreIndex.from_documents(documents)
     
     # store it for later
@@ -168,10 +185,14 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
         #Add Source Information
         with st.container():
-            st.write(source)
+            st.markdown("*" + source + "*")
             for source in response_stream.source_nodes:
-                st.markdown(source.metadata["file_name"] + " " + source.metadata["page_label"])
-
+                if source.metadata.get("file_name"):
+                    if source.metadata.get("page_label"):                        
+                        st.markdown(source.metadata["file_name"] + " " + source.metadata["page_label"])
+                    else:
+                        st.markdown(source.metadata["file_name"])
+                        
         #Add message to chat history
         message = {"role": "assistant", "content": response_stream.response}        
         st.session_state.messages.append(message)

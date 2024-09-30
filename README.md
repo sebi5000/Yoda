@@ -12,10 +12,12 @@ After installing the packages you need to do the following:
 2. Place your custom data into that folder e.g. PDF-Files or other File Data (it's mandatory to place at least 1 File)
 3. Create a file .env within the main folder and setup following variables:
 
+[mandatory]
 OPENAI_API_KEY=[YOUR API KEY]<br>
 
-If you want to use Anthropic Models as well, you should also add:
-ANTHROPIC_API_KEY=[YOUR API KEY]<br>
+[optional]
+ANTHROPIC_API_KEY=[YOUR API KEY]<br> #if you want to also use Anthropic Models
+LLAMA_PARSE_API_KEY=[YOUR_API_KEY] #if you want to parse files with llama-parse, which leads to better undestanding excel or word files. In this case create a subfolder in "data" named "office" and drop office documents there.
 
 ## Start the App
 Make sure you have some file in your data Folder. Then run command:
@@ -37,3 +39,13 @@ You can choose between the following modells (starts with low-price/fast):
 - claude-3-opus-20240229
 
 By default the config is pre-configured for using Anthropic Models.
+
+## Supported File Formats
+.docx
+.pdf
+.xlsx
+.csv
+.md
+.png
+.jpg
+.jpeg
